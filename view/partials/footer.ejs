@@ -1,0 +1,39 @@
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	<script src="/js/main.js"></script>
+	<script>
+		$(document).ready(function(){
+			let productos=[];
+			let template='';
+
+			fetch('http://localhost:8000/api/productos/')
+			.then((res)=>{
+				return res.json();
+
+			}).then((json)=>{
+				//console.log(json);
+				productos=json;
+
+				productos.forEach(producto=>{
+					template+=`<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">               
+									<div class="box-part text-center">                        
+                        				<img src="http://localhost:8000/images/`+producto.imagen+`" alt="" width="100%">
+										<div class="title">
+											<h4>`+producto.nombre+`</h4>
+										</div>                        
+										<div class="text">
+											<span>`+producto.precio+`</span>
+										</div>                        
+										<a class="btn btn-primary" href="#">agregar carrito</a>
+										<a class="btn btn-secondary" href="#">ver</a>                        
+					 				</div>
+								</div>`;
+				});
+				$('#template').html(template);
+			})
+		})
+	</script>
+
+</body>
+</html>
